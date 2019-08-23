@@ -6,7 +6,7 @@
     <color name="violet">#290d66</color>
     <color name="purple">#874ea3</color>
     <color name="transparent">#00ffffff</color>
-    <color name="lightShade">#44ffffff</color>
-    <color name="mediumShade">#88ffffff</color>
-    <color name="highShade">#ccffffff</color>
+    <color name="lightShade">#22ffffff</color>
+    <color name="mediumShade">#44ffffff</color>
+    <color name="highShade">#88ffffff</color>
 </resources>
