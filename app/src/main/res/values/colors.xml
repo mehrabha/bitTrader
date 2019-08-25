@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="violet">#290d66</color>
+    <color name="violetHighShade">#88071238</color>
+    <color name="violetLightShade">#22071238</color>
     <color name="purple">#874ea3</color>
     <color name="transparent">#00ffffff</color>
     <color name="lightShade">#22ffffff</color>
