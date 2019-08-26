@@ -325,7 +325,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <com.jjoe64.graphview.GraphView
-        android:id="@+id/graph"
+        android:id="@+id/main_graph"
         android:layout_width="0dp"
         android:layout_height="180dp"
         android:layout_marginTop="32dp"
@@ -341,7 +341,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/graph">
+        app:layout_constraintTop_toBottomOf="@+id/main_graph">
 
         <Button
             android:id="@+id/button6"
