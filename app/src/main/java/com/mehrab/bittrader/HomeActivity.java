@@ -2,6 +2,7 @@ package com.mehrab.bittrader;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -41,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         updatePrice();
-        generateDatapoints();
+        updateDatapoints();
     }
 
     // fetches current market price
@@ -58,21 +60,21 @@ public class HomeActivity extends AppCompatActivity {
                     // Extract data on response and update price
                     try {
                         JSONObject Bpi = response.getJSONObject("bpi");
-                        try {
-                            JSONObject Usd = Bpi.getJSONObject("USD");
-                            currentPrice_ = "$" + Usd.getString("rate");
+                        JSONObject Usd = Bpi.getJSONObject("USD");
+                        currentPrice_ = "$" + Usd.getString("rate");
 
-                            // Update price
-                            TextView btc_price = (TextView) findViewById(R.id.btc_price);
-                            btc_price.setText(currentPrice_);
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                            Log.e(TAG, "rate not found");
-                        }
+                        // Update price
+                        TextView btc_price = (TextView) findViewById(R.id.btc_price);
+                        btc_price.setText(currentPrice_);
+
+                        // FInd the time of update
+                        JSONObject Time = response.getJSONObject("time");
+                        TextView last_updated = (TextView) findViewById(R.id.last_updated);
+                        last_updated.setText("Updated: " + Time.getString("updated"));
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Log.e(TAG, "BPI not found");
                     }
+
                 }
             },
             new Response.ErrorListener() {
@@ -84,12 +86,45 @@ public class HomeActivity extends AppCompatActivity {
         );
         queue.add(request);
     }
-    // Generates datapoints for datapoints_
-    private void generateDatapoints() {
-        for(int i = 0; i < 10; i++) {
-            datapoints_.add(new DataPoint(i, i));
-        }
-        updateGraph();
+
+    // Fetches BTC historic prices and stores in datapoints_
+    private void updateDatapoints() {
+        datapoints_.clear();
+        //Make API call
+        queue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(
+            Request.Method.GET,
+            HISTORICAL_PRICE_URL,
+            null,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Extract data from api and update graph
+                    try {
+                        JSONObject Bpi = response.getJSONObject("bpi");
+                        int x_val = 0;
+                        Iterator i = Bpi.keys();
+                        Log.d(TAG, Bpi.toString());
+                        while (i.hasNext()) {
+                            String key = i.next().toString();
+                            double value = Bpi.getDouble(key);
+                            datapoints_.add(new DataPoint(x_val, value));
+                            x_val++;
+                        }
+                        updateGraph();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(TAG, "onErrorResponse: Cannot fetch data from api");
+                }
+            }
+        );
+        queue.add(request);
     }
 
     // Updates graph using the entries in datapoints_
