@@ -14,13 +14,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -103,13 +108,17 @@ public class HomeActivity extends AppCompatActivity {
                     try {
                         JSONObject Bpi = response.getJSONObject("bpi");
                         int x_val = 0;
-                        Iterator i = Bpi.keys();
-                        Log.d(TAG, Bpi.toString());
-                        while (i.hasNext()) {
-                            String key = i.next().toString();
+                        Iterator iter = Bpi.keys();
+
+                        while (iter.hasNext()) {
+                            String key = iter.next().toString();
                             double value = Bpi.getDouble(key);
-                            datapoints_.add(new DataPoint(x_val, value));
-                            x_val++;
+                            SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+                            try {
+                                datapoints_.add(new DataPoint(parser.parse(key), value));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
                         updateGraph();
                     } catch (JSONException e) {
@@ -153,6 +162,12 @@ public class HomeActivity extends AppCompatActivity {
 
         // Add series to graph
         graph.addSeries(series);
-    }
 
+        // Date label formatter for x axis
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
+        graph.getGridLabelRenderer().setTextSize(24);
+
+        // Set bounds
+        graph.getViewport().setXAxisBoundsManual(true);
+    }
 }
