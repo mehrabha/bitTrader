@@ -28,14 +28,14 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+        app:layout_constraintTop_toBottomOf="@+id/main_graph">
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.50151056" />
+            app:layout_constraintGuide_end="165dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline6"
@@ -209,12 +209,12 @@
         app:layout_constraintVertical_bias="0.01999998">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/btc_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="$10,100.28"
+            android:text="$0.0000"
             android:textColor="@color/highShade"
             android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -243,7 +243,7 @@
             android:textColor="@color/mediumShade"
             android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/btc_price"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6" />
     </android.support.constraint.ConstraintLayout>
@@ -328,78 +328,12 @@
         android:id="@+id/main_graph"
         android:layout_width="0dp"
         android:layout_height="180dp"
-        android:layout_marginTop="32dp"
+        android:background="@color/transparent"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        android:background="@color/transparent"
-        app:seriesColor="@color/highShade"/>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/main_graph">
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_btn"
-            android:text="1h"
-            android:textAllCaps="false"
-            android:textColor="@color/highShade"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/bg_btn"
-            android:text="1d"
-            android:textAllCaps="false"
-            android:textColor="@color/highShade"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button6"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button8"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/bg_btn"
-            android:text="1m"
-            android:textAllCaps="false"
-            android:textColor="@color/highShade"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button7"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button9"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/bg_btn"
-            android:text="1y"
-            android:textAllCaps="false"
-            android:textColor="@color/highShade"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button8"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
+        app:seriesColor="@color/highShade" />
 
     <TextView
         android:id="@+id/textView2"
@@ -411,6 +345,18 @@
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="4dp"
+        android:text="Last Updated: "
+        android:textColor="@color/mediumShade"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView7"
