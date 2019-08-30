@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "732628597085",
+    "firebase_url": "https://bittrader-c9961.firebaseio.com",
+    "project_id": "bittrader-c9961",
+    "storage_bucket": "bittrader-c9961.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732628597085:android:eef1850dc4f09056",
+        "android_client_info": {
+          "package_name": "com.mehrab.bittrader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732628597085-umimjc12esclfgu3j0rspgstj3pa5bo2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mehrab.bittrader",
+            "certificate_hash": "4ee4d217f0c2e9900c69e871e06c1f9e755af53a"
+          }
+        },
+        {
+          "client_id": "732628597085-416b30e0s1ajkick834fm5d3cm99pcli.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUkYGcqQy5CqDCENBiT1XzRKZeFhHgTZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "732628597085-416b30e0s1ajkick834fm5d3cm99pcli.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
