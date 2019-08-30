@@ -2,8 +2,8 @@ package com.mehrab.bittrader;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -21,11 +21,9 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
