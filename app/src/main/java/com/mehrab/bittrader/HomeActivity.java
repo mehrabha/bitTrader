@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ import java.util.Set;
 
 
 public class HomeActivity extends AppCompatActivity {
-    public static final String TAG = "HomeActivity.java";
+    private static final String TAG = "HomeActivity.java";
+    private static final DecimalFormat DF = new DecimalFormat("0.00");
     private RequestQueue queue;
     private static final String CURRENT_PRICE_URL =
             "https://api.coindesk.com/v1/bpi/currentprice.json";
@@ -74,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
 
         updateFooter();
         updatePrice();
-        updateDatapoints();
+        // updateDatapoints(); Gets called from updatePrice()
         //getUserData(); Gets called from updatePrice()
     }
 
@@ -159,6 +161,7 @@ public class HomeActivity extends AppCompatActivity {
                         JSONObject Time = response.getJSONObject("time");
                         TextView last_updated = (TextView) findViewById(R.id.last_updated);
                         last_updated.setText("Updated: " + Time.getString("updated"));
+                        updateDatapoints();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -204,6 +207,7 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         }
                         updateGraph();
+                        updatePriceInfo();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -252,6 +256,52 @@ public class HomeActivity extends AppCompatActivity {
 
         // Set bounds
         graph.getViewport().setXAxisBoundsManual(true);
+    }
+
+    // Update lowest/highest prices and the percent change
+    private void updatePriceInfo() {
+        // Grab textviews
+        TextView priceLowest = (TextView) findViewById(R.id.price_lowest);
+        TextView priceHighest = (TextView) findViewById(R.id.price_highest);
+        TextView priceChange = (TextView) findViewById(R.id.price_percent_change);
+
+        // Find prices from datapoints
+        double starting_val = datapoints_.get(0).getY();
+        double lowest_val = starting_val;
+        double highest_val = starting_val;
+
+        for (int i = 1; i < datapoints_.size(); i++) {
+            if (datapoints_.get(i).getY() > highest_val) {
+                highest_val = datapoints_.get(i).getY();
+            }
+
+            if (datapoints_.get(i).getY() < lowest_val) {
+                lowest_val = datapoints_.get(i).getY();
+            }
+        }
+
+        // Check if current price is lowest or highest
+        if (currentPriceDouble_ > highest_val) {
+            highest_val = currentPriceDouble_;
+        }
+        if (currentPriceDouble_ < lowest_val) {
+            lowest_val = currentPriceDouble_;
+        }
+
+        // Update the textviews
+        priceLowest.setText("$" + lowest_val);
+        priceHighest.setText("$" + highest_val);
+
+        // Calculate the percent change
+        if (starting_val < currentPriceDouble_) {
+            double change = 100 * (currentPriceDouble_ - starting_val) / starting_val;
+            priceChange.setText("+" + change + "%");
+        } else if (starting_val > currentPriceDouble_){
+            double change = 100 * (starting_val - currentPriceDouble_) / starting_val;
+            priceChange.setText("-" + change + "%");
+        } else {
+            priceChange.setText("0.00%");
+        }
     }
 
     public void logout(View view) {
