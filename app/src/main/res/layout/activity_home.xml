@@ -24,11 +24,11 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="144dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/main_graph">
+        app:layout_constraintTop_toBottomOf="@+id/last_updated2">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline5"
@@ -151,40 +151,40 @@
             app:layout_constraintTop_toTopOf="@+id/view4" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/account_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="$10,100.28"
+            android:text="$0.00"
             android:textColor="@color/highShade"
             android:textSize="18dp"
             app:layout_constraintStart_toStartOf="@+id/view5"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/btc_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="1.00000000"
+            android:text="0.00"
             android:textColor="@color/highShade"
             android:textSize="18dp"
             app:layout_constraintStart_toStartOf="@+id/view6"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/max_value_reached"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="$10,118.83"
+            android:text="0.00"
             android:textColor="@color/highShade"
             android:textSize="18dp"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/usd_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -221,11 +221,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/price_percent_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="-12.88%"
+            android:text="0.00%"
             android:textColor="@color/mediumShade"
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -349,7 +349,7 @@
         android:id="@+id/last_updated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Last Updated:"
         android:textColor="@color/mediumShade"
         android:textSize="12dp"
@@ -358,12 +358,24 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
+        android:id="@+id/last_updated2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="This data was produced from the Coindesk Bitcoin Price index."
+        android:textColor="@color/mediumShade"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/main_graph" />
+
+    <TextView
         android:id="@+id/footer_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/txt_btn_bg"
         android:clickable="true"
         android:onClick="logout"
@@ -371,9 +383,8 @@
         android:paddingTop="2dp"
         android:paddingRight="4dp"
         android:paddingBottom="2dp"
-        android:text="Logout: "
         android:textColor="@color/mediumShade"
-        android:textSize="12dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3" />
@@ -387,28 +398,28 @@
         android:text="High:"
         android:textColor="@color/mediumShade"
         android:textSize="14dp"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/price_lowest"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/price_lowest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:text="$10,005.63"
+        android:text="$0.00"
         android:textColor="@color/highShade"
         android:textSize="14dp"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/price_highest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:text="$10,118.83"
+        android:text="$0.00"
         android:textColor="@color/highShade"
         android:textSize="14dp"
         app:layout_constraintStart_toEndOf="@+id/textView7"
