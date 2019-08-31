@@ -35,6 +35,39 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view) {
         EditText email = (EditText) findViewById(R.id.login_email);
         EditText password = (EditText) findViewById(R.id.login_password);
+
+        if (email.getText().toString().matches("")) {
+            Toast.makeText(
+                    this,
+                    "Email cannot be empty",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else if (password.getText().toString().matches("")) {
+            Toast.makeText(
+                    this,
+                    "Password cannot be empty",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mAuth.signInWithEmailAndPassword(
+                email.getText().toString(),
+                password.getText().toString()
+        ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Login successful");
+                    startHome();
+                } else {
+                    Log.d(TAG, "Login unsuccessful");
+                    Toast.makeText(
+                            MainActivity.this,
+                            "Invalid username and/or password",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void signup(View view) {
@@ -62,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Log.d(TAG, "Sign Up Successful");
+                    Log.d(TAG, "Signup Successful");
                     startHome();
                 } else {
-                    Log.d(TAG, "Sign Up unsuccessful");
+                    Log.d(TAG, "Signup unsuccessful");
                     Toast.makeText(
                             MainActivity.this,
                             "Unable to create account",

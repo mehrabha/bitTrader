@@ -9,6 +9,7 @@
     <color name="purple">#874ea3</color>
     <color name="transparent">#00ffffff</color>
     <color name="lightShade">#22ffffff</color>
+    <color name="lightestShade">#18ffffff</color>
     <color name="mediumShade">#66ffffff</color>
     <color name="highShade">#88ffffff</color>
     <color name="darkShade">#11111111</color>

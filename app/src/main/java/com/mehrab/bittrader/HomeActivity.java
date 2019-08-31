@@ -1,10 +1,12 @@
 package com.mehrab.bittrader;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -13,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
@@ -20,6 +24,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +41,8 @@ public class HomeActivity extends AppCompatActivity {
     private static final String HISTORICAL_PRICE_URL =
             "https://api.coindesk.com/v1/bpi/historical/close.json";
 
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser_;
 
     private List<DataPoint> datapoints_ = new ArrayList<DataPoint>();
     private String currentPrice_ = "";
@@ -45,8 +51,21 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mAuth = FirebaseAuth.getInstance();
+        currentUser_ = mAuth.getCurrentUser();
+
+        if (currentUser_ == null) {
+            toLogin();
+        }
+
+        updateFooter();
         updatePrice();
         updateDatapoints();
+    }
+
+    private void updateFooter() {
+        TextView footerEmail = (TextView) findViewById(R.id.footer_email);
+        footerEmail.setText("Logout: " + currentUser_.getEmail());
     }
 
     // fetches current market price
@@ -167,5 +186,15 @@ public class HomeActivity extends AppCompatActivity {
 
         // Set bounds
         graph.getViewport().setXAxisBoundsManual(true);
+    }
+
+    public void logout(View view) {
+        mAuth.signOut();
+        toLogin();
+    }
+
+    private void toLogin() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
