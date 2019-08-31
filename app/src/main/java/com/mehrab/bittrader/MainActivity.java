@@ -16,9 +16,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.mehrab.bittrader.User.UserInformation;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private static final double STARTING_BTC_BALANCE = 1.00;
+    private static final double STARTING_USD_BALANCE = 10000.00;
+
+    private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
@@ -26,16 +33,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+
+        // Check if user is already logged in
         if (currentUser != null) {
-            startHome();
+            startHomeActivity();
         }
     }
+
+
     public void login(View view) {
+        // Grab input fields
         EditText email = (EditText) findViewById(R.id.login_email);
         EditText password = (EditText) findViewById(R.id.login_password);
 
+        // Check user input
         if (email.getText().toString().matches("")) {
             Toast.makeText(
                     this,
@@ -50,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // Login with the provided credentials
         mAuth.signInWithEmailAndPassword(
                 email.getText().toString(),
                 password.getText().toString()
@@ -58,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Login successful");
-                    startHome();
+                    currentUser = mAuth.getCurrentUser();
+                    startHomeActivity();
                 } else {
                     Log.d(TAG, "Login unsuccessful");
                     Toast.makeText(
@@ -71,9 +87,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signup(View view) {
+        // Grab input fields
         EditText email = (EditText) findViewById(R.id.login_email);
         EditText password = (EditText) findViewById(R.id.login_password);
 
+        // Check user input
         if (email.getText().toString().matches("")) {
             Toast.makeText(
                     this,
@@ -87,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        // Signup new user
+
+        // Signup as a new user with the provided credentials
         mAuth.createUserWithEmailAndPassword(
                 email.getText().toString(),
                 password.getText().toString()
@@ -96,7 +115,9 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Signup Successful");
-                    startHome();
+                    currentUser = mAuth.getCurrentUser();
+                    initializeNewUser();
+                    startHomeActivity();
                 } else {
                     Log.d(TAG, "Signup unsuccessful");
                     Toast.makeText(
@@ -108,7 +129,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void startHome() {
+    // Set starting balance for the new user
+    private void initializeNewUser() {
+        UserInformation newUser = new UserInformation(
+                STARTING_BTC_BALANCE,
+                STARTING_USD_BALANCE,
+                0);
+
+        // Save user info to database
+        mDatabase.child(currentUser.getUid()).setValue(newUser);
+    }
+
+    private void startHomeActivity() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
