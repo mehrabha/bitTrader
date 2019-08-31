@@ -38,6 +38,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -46,6 +47,8 @@ import java.util.Set;
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity.java";
     private static final DecimalFormat DF = new DecimalFormat("0.00");
+    private static final DecimalFormat BTC_DF = new DecimalFormat("0.0000");
+
     private RequestQueue queue;
     private static final String CURRENT_PRICE_URL =
             "https://api.coindesk.com/v1/bpi/currentprice.json";
@@ -111,16 +114,16 @@ public class HomeActivity extends AppCompatActivity {
         TextView usdBalance = (TextView) findViewById(R.id.usd_balance);
         TextView maxValueReached = (TextView) findViewById(R.id.max_value_reached);
 
-        btcBalance.setText(userInformation_.btcBalance + "");
-        usdBalance.setText("$" + userInformation_.usdBalance);
+        btcBalance.setText(BTC_DF.format(userInformation_.btcBalance) + "");
+        usdBalance.setText("$" + DF.format(userInformation_.usdBalance));
 
         // Calculate account value
         double value = userInformation_.usdBalance + (userInformation_.btcBalance * currentPriceDouble_);
-        accountValue.setText("$" + value);
+        accountValue.setText("$" + DF.format(value));
 
         // Set account max value reached
         if (value > userInformation_.maxValueReached) {
-            maxValueReached.setText("$" + value);
+            maxValueReached.setText("$" + DF.format(value));
 
             // Save new max value to account
             userInformation_.maxValueReached = value;
@@ -153,7 +156,7 @@ public class HomeActivity extends AppCompatActivity {
                         currentPriceDouble_ = Usd.getDouble("rate_float");
                         // Update price
                         TextView btc_price = (TextView) findViewById(R.id.btc_price);
-                        btc_price.setText(currentPrice_);
+                        btc_price.setText("$" + DF.format(currentPriceDouble_));
 
                         getUserData();
 
@@ -206,6 +209,8 @@ public class HomeActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
+                        // Add today's price
+                        datapoints_.add(new DataPoint(new Date(), currentPriceDouble_));
                         updateGraph();
                         updatePriceInfo();
                     } catch (JSONException e) {
@@ -280,25 +285,17 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        // Check if current price is lowest or highest
-        if (currentPriceDouble_ > highest_val) {
-            highest_val = currentPriceDouble_;
-        }
-        if (currentPriceDouble_ < lowest_val) {
-            lowest_val = currentPriceDouble_;
-        }
-
         // Update the textviews
-        priceLowest.setText("$" + lowest_val);
-        priceHighest.setText("$" + highest_val);
+        priceLowest.setText("$" + DF.format(lowest_val));
+        priceHighest.setText("$" + DF.format(highest_val));
 
         // Calculate the percent change
         if (starting_val < currentPriceDouble_) {
             double change = 100 * (currentPriceDouble_ - starting_val) / starting_val;
-            priceChange.setText("+" + change + "%");
+            priceChange.setText("+" + DF.format(change) + "%");
         } else if (starting_val > currentPriceDouble_){
             double change = 100 * (starting_val - currentPriceDouble_) / starting_val;
-            priceChange.setText("-" + change + "%");
+            priceChange.setText("-" + DF.format(change) + "%");
         } else {
             priceChange.setText("0.00%");
         }
