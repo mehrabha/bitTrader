@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "732628597085-0e4vm3mre3jsqipbujtlpf06tgag7f3n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mehrab.bittrader",
+            "certificate_hash": "ec4dea711ed83e67786ed43924c0c71540f9d1ea"
+          }
+        },
+        {
           "client_id": "732628597085-umimjc12esclfgu3j0rspgstj3pa5bo2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
