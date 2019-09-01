@@ -95,6 +95,10 @@ public class LeaderboardActivity extends AppCompatActivity {
         toLogin();
     }
 
+    public void back(View view) {
+        finish();
+    }
+
     private void toLogin() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
