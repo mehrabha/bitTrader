@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +32,6 @@ import com.mehrab.bittrader.User.UserInformation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -42,11 +40,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-
 
 public class HomeActivity extends AppCompatActivity {
-    private static final String TAG = "HomeActivity.java";
     private static final DecimalFormat DF = new DecimalFormat("0.00");
     private static final DecimalFormat BTC_DF = new DecimalFormat("0.0000");
 
@@ -100,7 +95,6 @@ public class HomeActivity extends AppCompatActivity {
                     Transaction transaction = ds.getValue(Transaction.class);
                     transactions.add(transaction);
                 }
-                Log.d(TAG, transactions.toString());
                 userInformation_ = new UserInformation(
                         data.child("username_").getValue(String.class),
                         data.child("btcBalance_").getValue(Double.class),
@@ -114,7 +108,6 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Failed to read user data");
                 Toast.makeText(
                         getApplicationContext(),
                         "Password cannot be empty",
@@ -190,7 +183,6 @@ public class HomeActivity extends AppCompatActivity {
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG, "onErrorResponse: Cannot fetch data from api");
                 }
             }
         );
@@ -237,7 +229,6 @@ public class HomeActivity extends AppCompatActivity {
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG, "onErrorResponse: Cannot fetch data from api");
                 }
             }
         );

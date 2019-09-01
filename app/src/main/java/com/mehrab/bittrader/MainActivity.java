@@ -5,10 +5,8 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,7 +22,6 @@ import com.mehrab.bittrader.User.UserInformation;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     private static final double STARTING_BTC_BALANCE = 1.00;
     private static final double STARTING_USD_BALANCE = 10000.00;
 
@@ -75,11 +72,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Log.d(TAG, "Login successful");
                     currentUser = mAuth.getCurrentUser();
                     startHomeActivity();
                 } else {
-                    Log.d(TAG, "Login unsuccessful");
                     Toast.makeText(
                             MainActivity.this,
                             task.getException().getMessage(),
@@ -117,12 +112,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Log.d(TAG, "Signup Successful");
                     currentUser = mAuth.getCurrentUser();
                     initializeNewUser();
                     startHomeActivity();
                 } else {
-                    Log.d(TAG, "Signup unsuccessful");
                     Toast.makeText(
                             MainActivity.this,
                             task.getException().getMessage(),

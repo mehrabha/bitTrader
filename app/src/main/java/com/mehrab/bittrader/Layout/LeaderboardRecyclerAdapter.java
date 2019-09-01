@@ -4,11 +4,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mehrab.bittrader.LeaderboardActivity;
 import com.mehrab.bittrader.R;
 import com.mehrab.bittrader.User.UserInformation;
 
 import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -20,6 +20,9 @@ public class LeaderboardRecyclerAdapter extends RecyclerView.Adapter<Leaderboard
 
     public LeaderboardRecyclerAdapter(List<UserInformation> users) {
         users_ = users;
+
+        // Sort the list
+        Collections.sort(users_);
     }
 
     @NonNull

@@ -2,7 +2,6 @@ package com.mehrab.bittrader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mehrab.bittrader.Layout.LeaderboardRecyclerAdapter;
-import com.mehrab.bittrader.Layout.RecyclerAdapter;
 import com.mehrab.bittrader.User.Transaction;
 import com.mehrab.bittrader.User.UserInformation;
 
@@ -26,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LeaderboardActivity extends AppCompatActivity {
-    private final String TAG = "LeaderbaordActivity";
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
@@ -74,7 +71,6 @@ public class LeaderboardActivity extends AppCompatActivity {
                             new ArrayList<Transaction>()
                     ));
                 }
-                Log.d(TAG, users_.toString());
                 updateLeaderboard();
             }
 

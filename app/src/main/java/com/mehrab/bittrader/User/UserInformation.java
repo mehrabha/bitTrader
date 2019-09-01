@@ -3,7 +3,7 @@ package com.mehrab.bittrader.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserInformation {
+public class UserInformation implements Comparable<UserInformation>{
     public String username_;
     public double btcBalance_;
     public double usdBalance_;
@@ -27,5 +27,15 @@ public class UserInformation {
 
     public void addTransaction(Transaction t) {
         transactions_.add(t);
+    }
+
+    // For sorting by account value
+    @Override
+    public int compareTo(UserInformation userInformation) {
+        if (this.accountValue_ < userInformation.accountValue_) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }

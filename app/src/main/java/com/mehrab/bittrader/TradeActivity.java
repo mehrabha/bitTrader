@@ -2,7 +2,6 @@ package com.mehrab.bittrader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.LayoutDirection;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -39,7 +38,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TradeActivity extends AppCompatActivity {
-    private static final String TAG = "TradeActivity";
     private static final DecimalFormat DF = new DecimalFormat("0.00");
     private static final DecimalFormat BTC_DF = new DecimalFormat("0.0000");
     private static final String CURRENT_PRICE_URL =
@@ -101,7 +99,6 @@ public class TradeActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "onErrorResponse: Cannot fetch data from api");
                     }
                 }
         );
@@ -124,7 +121,6 @@ public class TradeActivity extends AppCompatActivity {
                     Transaction transaction = ds.getValue(Transaction.class);
                     transactions.add(transaction);
                 }
-                Log.d(TAG, transactions.toString());
                 userInformation_ = new UserInformation(
                         data.child("username_").getValue(String.class),
                         data.child("btcBalance_").getValue(Double.class),
@@ -138,7 +134,6 @@ public class TradeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Failed to read user data");
                 Toast.makeText(
                         getApplicationContext(),
                         "Password cannot be empty",
