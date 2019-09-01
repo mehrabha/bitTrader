@@ -310,4 +310,14 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    public void toLeaderboard(View view) {
+        Intent intent = new Intent(this, LeaderboardActivity.class);
+        startActivity(intent);
+    }
+
+    public void toTrade(View view) {
+        Intent intent = new Intent(this, TradeActivity.class);
+        startActivity(intent);
+    }
 }
