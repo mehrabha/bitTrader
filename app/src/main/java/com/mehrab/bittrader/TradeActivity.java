@@ -195,13 +195,19 @@ public class TradeActivity extends AppCompatActivity {
             return;
         }
         Double amount = Double.valueOf(btcAmount.getText().toString());
-        if (amount * currentPriceDouble_ > userInformation_.btcBalance) {
+        Double amountUSD = amount * currentPriceDouble_;
+        if (amountUSD > userInformation_.usdBalance) {
             Toast.makeText(
                     getApplicationContext(),
                     "Not enough USD",
                     Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // Subtract usd amount and add btc bought to account
+        userInformation_.usdBalance -= amountUSD;
+        userInformation_.btcBalance += amount;
+        mDatabase.child(currentUser_.getUid()).setValue(userInformation_);
     }
 
     private void toLogin() {
