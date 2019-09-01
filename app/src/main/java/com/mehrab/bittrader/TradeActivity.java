@@ -21,12 +21,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mehrab.bittrader.User.Transaction;
 import com.mehrab.bittrader.User.UserInformation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -108,7 +111,21 @@ public class TradeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Save data to userInformation
                 DataSnapshot data = dataSnapshot.child(currentUser_.getUid());
-                userInformation_ = data.getValue(UserInformation.class);
+                
+                // Get past transactions
+                List<Transaction> transactions = new ArrayList<Transaction>();
+                for (DataSnapshot ds: data.child("transactions_").getChildren()) {
+                    String key = ds.getKey();
+                    Transaction transaction = ds.getValue(Transaction.class);
+                    transactions.add(transaction);
+                }
+                Log.d(TAG, transactions.toString());
+                userInformation_ = new UserInformation(
+                        data.child("btcBalance_").getValue(Double.class),
+                        data.child("usdBalance_").getValue(Double.class),
+                        data.child("maxValueReached_").getValue(Double.class),
+                        transactions
+                );
                 updateApp();
             }
 
@@ -131,20 +148,20 @@ public class TradeActivity extends AppCompatActivity {
         TextView usdBalance = (TextView) findViewById(R.id.usd_balance);
         TextView maxValueReached = (TextView) findViewById(R.id.max_value_reached);
 
-        btcBalance.setText(BTC_DF.format(userInformation_.btcBalance) + "");
-        usdBalance.setText("$" + DF.format(userInformation_.usdBalance));
+        btcBalance.setText(BTC_DF.format(userInformation_.btcBalance_) + "");
+        usdBalance.setText("$" + DF.format(userInformation_.usdBalance_));
 
         // Calculate account value
-        double value = userInformation_.usdBalance + (userInformation_.btcBalance * currentPriceDouble_);
+        double value = userInformation_.usdBalance_ + (userInformation_.btcBalance_ * currentPriceDouble_);
         accountValue.setText("$" + DF.format(value));
 
         // Set account max value reached
-        if (value > userInformation_.maxValueReached) {
+        if (value > userInformation_.maxValueReached_) {
             // Save new max value to account
-            userInformation_.maxValueReached = value;
+            userInformation_.maxValueReached_ = value;
             mDatabase.child(currentUser_.getUid()).setValue(userInformation_);
         }
-        maxValueReached.setText("$" + DF.format(userInformation_.maxValueReached));
+        maxValueReached.setText("$" + DF.format(userInformation_.maxValueReached_));
     }
 
     // Sell btc
@@ -161,7 +178,7 @@ public class TradeActivity extends AppCompatActivity {
             return;
         }
         Double amount = Double.valueOf(btcAmount.getText().toString());
-        if (amount > userInformation_.btcBalance) {
+        if (amount > userInformation_.btcBalance_) {
             Toast.makeText(
                     getApplicationContext(),
                     "Amount exceeds current BTC Balance",
@@ -173,10 +190,13 @@ public class TradeActivity extends AppCompatActivity {
         Double usd_amount = currentPriceDouble_ * amount;
 
         // Add usd amount and subtract btc sold from account
-        userInformation_.btcBalance -= amount;
-        userInformation_.usdBalance += usd_amount;
+        userInformation_.btcBalance_ -= amount;
+        userInformation_.usdBalance_ += usd_amount;
 
-        // Store user to database
+        // Record new transaction
+        userInformation_.addTransaction(new Transaction("Sold", amount, currentPriceDouble_));
+
+        // Update database
         mDatabase.child(currentUser_.getUid()).setValue(userInformation_);
     }
 
@@ -195,7 +215,7 @@ public class TradeActivity extends AppCompatActivity {
         }
         Double amount = Double.valueOf(btcAmount.getText().toString());
         Double amountUSD = amount * currentPriceDouble_;
-        if (amountUSD > userInformation_.usdBalance) {
+        if (amountUSD > userInformation_.usdBalance_) {
             Toast.makeText(
                     getApplicationContext(),
                     "Not enough USD",
@@ -204,8 +224,13 @@ public class TradeActivity extends AppCompatActivity {
         }
 
         // Subtract usd amount and add btc bought to account
-        userInformation_.usdBalance -= amountUSD;
-        userInformation_.btcBalance += amount;
+        userInformation_.usdBalance_ -= amountUSD;
+        userInformation_.btcBalance_ += amount;
+
+        // Record new transaction
+        userInformation_.addTransaction(new Transaction("Bought", amount, currentPriceDouble_));
+
+        // Update database
         mDatabase.child(currentUser_.getUid()).setValue(userInformation_);
     }
 

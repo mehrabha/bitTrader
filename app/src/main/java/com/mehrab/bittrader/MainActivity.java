@@ -18,7 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mehrab.bittrader.User.Transaction;
 import com.mehrab.bittrader.User.UserInformation;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -134,7 +137,8 @@ public class MainActivity extends AppCompatActivity {
         UserInformation newUser = new UserInformation(
                 STARTING_BTC_BALANCE,
                 STARTING_USD_BALANCE,
-                0);
+                0,
+                new ArrayList<Transaction>());
 
         // Save user info to database
         mDatabase.child(currentUser.getUid()).setValue(newUser);

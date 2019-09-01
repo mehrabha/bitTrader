@@ -28,6 +28,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.mehrab.bittrader.User.Transaction;
 import com.mehrab.bittrader.User.UserInformation;
 
 import org.json.JSONException;
@@ -91,7 +92,21 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Save data to userInformation
                 DataSnapshot data = dataSnapshot.child(currentUser_.getUid());
-                userInformation_ = data.getValue(UserInformation.class);
+
+                // Get past transactions
+                List<Transaction> transactions = new ArrayList<Transaction>();
+                for (DataSnapshot ds: data.child("transactions_").getChildren()) {
+                    String key = ds.getKey();
+                    Transaction transaction = ds.getValue(Transaction.class);
+                    transactions.add(transaction);
+                }
+                Log.d(TAG, transactions.toString());
+                userInformation_ = new UserInformation(
+                        data.child("btcBalance_").getValue(Double.class),
+                        data.child("usdBalance_").getValue(Double.class),
+                        data.child("maxValueReached_").getValue(Double.class),
+                        transactions
+                );
                 updateApp();
             }
 
@@ -114,20 +129,20 @@ public class HomeActivity extends AppCompatActivity {
         TextView usdBalance = (TextView) findViewById(R.id.usd_balance);
         TextView maxValueReached = (TextView) findViewById(R.id.max_value_reached);
 
-        btcBalance.setText(BTC_DF.format(userInformation_.btcBalance) + "");
-        usdBalance.setText("$" + DF.format(userInformation_.usdBalance));
+        btcBalance.setText(BTC_DF.format(userInformation_.btcBalance_) + "");
+        usdBalance.setText("$" + DF.format(userInformation_.usdBalance_));
 
         // Calculate account value
-        double value = userInformation_.usdBalance + (userInformation_.btcBalance * currentPriceDouble_);
+        double value = userInformation_.usdBalance_ + (userInformation_.btcBalance_ * currentPriceDouble_);
         accountValue.setText("$" + DF.format(value));
 
         // Set account max value reached
-        if (value > userInformation_.maxValueReached) {
+        if (value > userInformation_.maxValueReached_) {
             // Save new max value to account
-            userInformation_.maxValueReached = value;
+            userInformation_.maxValueReached_ = value;
             mDatabase.child(currentUser_.getUid()).setValue(userInformation_);
         }
-        maxValueReached.setText("$" + DF.format(userInformation_.maxValueReached));
+        maxValueReached.setText("$" + DF.format(userInformation_.maxValueReached_));
     }
 
     // Shows the logged in user's email
