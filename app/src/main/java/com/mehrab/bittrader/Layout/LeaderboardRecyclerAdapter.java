@@ -1,12 +1,12 @@
 package com.mehrab.bittrader.Layout;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mehrab.bittrader.LeaderboardActivity;
 import com.mehrab.bittrader.R;
-import com.mehrab.bittrader.User.Transaction;
+import com.mehrab.bittrader.User.UserInformation;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -14,41 +14,36 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+public class LeaderboardRecyclerAdapter extends RecyclerView.Adapter<LeaderboardRecyclerAdapter.MyViewHolder> {
     private static final DecimalFormat DF = new DecimalFormat("0.00");
-    private static final DecimalFormat BTC_DF = new DecimalFormat("0.0000");
+    List<UserInformation> users_;
 
-    private List<Transaction> transactions_;
-
-    public RecyclerAdapter(List<Transaction> transactions) {
-        transactions_ = transactions;
+    public LeaderboardRecyclerAdapter(List<UserInformation> users) {
+        users_ = users;
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         TextView textView = (TextView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.transaction_layout, parent, false);
-
         MyViewHolder viewHolder = new MyViewHolder(textView);
-
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Transaction transaction = transactions_.get(position);
-        String text = transaction.type_ + " " + BTC_DF.format(transaction.amount_);
-        text += " at " + DF.format(transaction.btc_price_) + "/BTC";
+        String text = users_.get(position).username_ + ", Account Value: " + DF.format(users_.get(position).accountValue_);
         holder.item_.setText(text);
     }
 
     @Override
     public int getItemCount() {
-        return transactions_.size();
+        return users_.size();
     }
 
     // Specify textview as item
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView item_;
         MyViewHolder(TextView item) {
             super(item);

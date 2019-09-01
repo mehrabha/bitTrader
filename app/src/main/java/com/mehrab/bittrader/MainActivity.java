@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 STARTING_BTC_BALANCE,
                 STARTING_USD_BALANCE,
                 0,
+                0,
                 new ArrayList<Transaction>());
 
         // Save user info to database

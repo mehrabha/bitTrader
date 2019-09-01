@@ -129,6 +129,7 @@ public class TradeActivity extends AppCompatActivity {
                         data.child("username_").getValue(String.class),
                         data.child("btcBalance_").getValue(Double.class),
                         data.child("usdBalance_").getValue(Double.class),
+                        0,
                         data.child("maxValueReached_").getValue(Double.class),
                         transactions
                 );

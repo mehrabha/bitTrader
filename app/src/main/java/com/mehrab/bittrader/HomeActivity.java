@@ -63,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private List<DataPoint> datapoints_ = new ArrayList<DataPoint>();
     private String currentPrice_ = "";
-    private double currentPriceDouble_ = 0;
+    public static double currentPriceDouble_ = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                         data.child("username_").getValue(String.class),
                         data.child("btcBalance_").getValue(Double.class),
                         data.child("usdBalance_").getValue(Double.class),
+                        0,
                         data.child("maxValueReached_").getValue(Double.class),
                         transactions
                 );
