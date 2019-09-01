@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Trade History"
-        android:textColor="@color/mediumShade"
+        android:textColor="@color/highShade"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Account Info"
-        android:textColor="@color/mediumShade"
+        android:textColor="@color/highShade"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/last_updated2" />
@@ -310,10 +310,11 @@
         android:id="@+id/button4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_btn"
+        android:onClick="buy"
         android:text="Buy"
         android:textAllCaps="false"
         android:textColor="@color/highShade"
@@ -321,16 +322,17 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/btc_amount" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/bg_btn"
+        android:onClick="sell"
         android:text="Sell"
         android:textAllCaps="false"
         android:textColor="@color/highShade"
@@ -338,7 +340,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/btc_amount" />
 
     <TextView
         android:id="@+id/last_updated2"
@@ -355,45 +357,27 @@
         android:id="@+id/last_updated3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="BTC Amount:"
-        android:textColor="@color/mediumShade"
+        android:layout_marginTop="32dp"
+        android:text="Market Order:"
+        android:textColor="@color/highShade"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-    <TextView
-        android:id="@+id/footer_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/txt_btn_bg"
-        android:clickable="true"
-        android:onClick="logout"
-        android:paddingLeft="4dp"
-        android:paddingTop="2dp"
-        android:paddingRight="4dp"
-        android:paddingBottom="2dp"
-        android:textColor="@color/mediumShade"
-        android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3" />
-
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/btc_amount"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_txtfield"
         android:ems="10"
-        android:hint="0.0000"
+        android:hint="Enter Amount"
         android:inputType="numberDecimal"
         android:padding="16dp"
+        android:paddingHorizontal="10dp"
         android:textColor="@color/highShade"
         android:textColorHint="@color/mediumShade"
+        android:textSize="14dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/last_updated3" />
