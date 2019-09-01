@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="12dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginBottom="0dp"
+    android:background="@color/lightShade"
+    android:padding="12dp"
+    android:text="Bought 1.25 BTC at $12345.67/BTC"
+    android:textColor="@color/highShade"
+    android:textSize="14dp"></TextView>

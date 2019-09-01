@@ -362,7 +362,7 @@
         android:textColor="@color/highShade"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/transactionList" />
 
     <EditText
         android:id="@+id/btc_amount"
@@ -383,11 +383,12 @@
         app:layout_constraintTop_toBottomOf="@+id/last_updated3" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/transactionList"
         android:layout_width="0dp"
         android:layout_height="140dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_recycler"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/last_updated4" />

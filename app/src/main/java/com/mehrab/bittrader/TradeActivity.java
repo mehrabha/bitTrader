@@ -2,6 +2,7 @@ package com.mehrab.bittrader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.LayoutDirection;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mehrab.bittrader.Layout.RecyclerAdapter;
 import com.mehrab.bittrader.User.Transaction;
 import com.mehrab.bittrader.User.UserInformation;
 
@@ -33,6 +35,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TradeActivity extends AppCompatActivity {
     private static final String TAG = "TradeActivity";
@@ -46,6 +50,7 @@ public class TradeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser_;
     private UserInformation userInformation_;
+    private RecyclerAdapter recyclerAdapter;
 
     private String currentPrice_ = "";
     private double currentPriceDouble_ = 0;
@@ -162,6 +167,18 @@ public class TradeActivity extends AppCompatActivity {
             mDatabase.child(currentUser_.getUid()).setValue(userInformation_);
         }
         maxValueReached.setText("$" + DF.format(userInformation_.maxValueReached_));
+
+        // Update transaction history
+        updateRecycler();
+    }
+
+    // Refreshes transaction history
+    private void updateRecycler() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.transactionList);
+        RecyclerView.LayoutManager linearLayout = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayout);
+        recyclerAdapter = new RecyclerAdapter(userInformation_.transactions_);
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
     // Sell btc
