@@ -123,12 +123,11 @@ public class HomeActivity extends AppCompatActivity {
 
         // Set account max value reached
         if (value > userInformation_.maxValueReached) {
-            maxValueReached.setText("$" + DF.format(value));
-
             // Save new max value to account
             userInformation_.maxValueReached = value;
             mDatabase.child(currentUser_.getUid()).setValue(userInformation_);
         }
+        maxValueReached.setText("$" + DF.format(userInformation_.maxValueReached));
     }
 
     // Shows the logged in user's email
@@ -308,6 +307,16 @@ public class HomeActivity extends AppCompatActivity {
 
     private void toLogin() {
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void toLeaderboard(View view) {
+        Intent intent = new Intent(this, LeaderboardActivity.class);
+        startActivity(intent);
+    }
+
+    public void toTrade(View view) {
+        Intent intent = new Intent(this, TradeActivity.class);
         startActivity(intent);
     }
 }
