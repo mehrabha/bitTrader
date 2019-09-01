@@ -134,7 +134,20 @@ public class MainActivity extends AppCompatActivity {
 
     // Set starting balance for the new user
     private void initializeNewUser() {
+        // Extract username from email
+        String email = currentUser.getEmail();
+        String username = "";
+
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == '@') {
+                break;
+            } else {
+                username += email.charAt(i);
+            }
+        }
+
         UserInformation newUser = new UserInformation(
+                username,
                 STARTING_BTC_BALANCE,
                 STARTING_USD_BALANCE,
                 0,

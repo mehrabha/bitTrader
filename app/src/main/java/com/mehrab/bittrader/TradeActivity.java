@@ -126,6 +126,7 @@ public class TradeActivity extends AppCompatActivity {
                 }
                 Log.d(TAG, transactions.toString());
                 userInformation_ = new UserInformation(
+                        data.child("username_").getValue(String.class),
                         data.child("btcBalance_").getValue(Double.class),
                         data.child("usdBalance_").getValue(Double.class),
                         data.child("maxValueReached_").getValue(Double.class),

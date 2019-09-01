@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserInformation {
+    public String username_;
     public double btcBalance_;
     public double usdBalance_;
     public double maxValueReached_;
@@ -13,7 +14,8 @@ public class UserInformation {
         transactions_ = new ArrayList<Transaction>();
     }
 
-    public UserInformation(double btcBalance, double usdBalance, double maxValueReached, List<Transaction> transactions) {
+    public UserInformation(String username, double btcBalance, double usdBalance, double maxValueReached, List<Transaction> transactions) {
+        username_ = username;
         btcBalance_ = btcBalance;
         usdBalance_ = usdBalance;
         maxValueReached_ = maxValueReached;
