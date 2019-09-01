@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Login unsuccessful");
                     Toast.makeText(
                             MainActivity.this,
-                            "Invalid username and/or password",
+                            task.getException().getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
             }
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Signup unsuccessful");
                     Toast.makeText(
                             MainActivity.this,
-                            "Unable to create account",
+                            task.getException().getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
             }

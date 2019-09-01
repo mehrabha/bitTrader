@@ -357,7 +357,7 @@
         android:id="@+id/last_updated3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Market Order:"
         android:textColor="@color/highShade"
         android:textSize="14dp"
@@ -385,7 +385,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="140dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_recycler"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
